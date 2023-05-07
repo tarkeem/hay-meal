@@ -6,7 +6,7 @@ import '../provider/themeProvider.dart';
 
 Widget radio_list_Tile(text, val, groubval, cxt) {
   return RadioListTile(
-      title: Text(text),
+      title: Text(text,style: Theme.of(cxt).textTheme.bodyText1,),
       value: val,
       groupValue: groubval,
       onChanged: (newval) {
@@ -18,7 +18,7 @@ Widget colorPicker_List_Tile(tex, icon, cxt, int n) {
   Color primcol = Provider.of<themeProvider>(cxt).primaryColor;
   var prov = Provider.of<themeProvider>(cxt);
   return ListTile(
-    title: Text(tex),
+    title: Text(tex,style: TextStyle(color: Colors.pink),),
     leading: Icon(icon),
     trailing: CircleAvatar(
       backgroundColor:n==0? primcol:prov.accentColor,

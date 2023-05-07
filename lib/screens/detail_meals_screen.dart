@@ -18,6 +18,7 @@ class _detail_meal extends State<detail_meal> {
 
   @override
   Widget build(BuildContext context) {
+    var deviceSize=MediaQuery.of(context).size;
     var id= ModalRoute.of(context)?.settings.arguments as String; //i send here one value from pre page so no need to deal with map
     var meal=DUMMY_MEALS.firstWhere((mealObj) =>mealObj.id==id );
 
@@ -31,70 +32,110 @@ class _detail_meal extends State<detail_meal> {
         },
 
       ),
-      appBar: AppBar(
-        title: Text(meal.title),
-      ),
 
-      body:SingleChildScrollView (
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.all(10),
-                  width: double.infinity,
-                  height: 300,
-                  child:Hero(tag: id,child:Image.network(meal.imageUrl,fit: BoxFit.cover,)),
-                  
-                ),
+      body:Stack(
+        fit: StackFit.expand,
+        children: [
           
-                Text('ingredients',style: TextStyle(fontSize: 25,color: Colors.black),),
-                build_bordered_widget(ListView.builder( //set wid and heaight of container because listview take all available height so it can cover other element
-                    itemCount: meal.ingredients.length,
-                    itemBuilder: (cxt,n){
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          color: Colors.yellow,
-                          child: Text(meal.ingredients[n],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 18),
-                          )
-                          ),
-                      );
-                    }
-                    ),
-                    ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top:0,
+            height: deviceSize.height*0.5,
+           child:Image.network(meal.imageUrl,fit: BoxFit.cover,)),
+            TweenAnimationBuilder<double>(
+              duration: Duration(milliseconds: 900),
+              tween: Tween(begin: 1,end: 0),
+              curve: Curves.bounceOut,
+              builder: (context, value, child)  {
+                return Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom:-value*deviceSize.height,
+                  height: deviceSize.height*0.6,
+                  child:
+                  Container(
 
-                 Text('steps',style: TextStyle(fontSize: 25,color: Colors.black),),
-
-                  build_bordered_widget(ListView.builder( 
-                    itemCount: meal.steps.length,
-                    itemBuilder: (cxt,n){
-                      return Column(
-                        children: [
-                          Card(
-                            color: Colors.yellow,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 4),
-                              child:ListTile (
-                                leading: CircleAvatar(
-                                  child: Text('#${n+1}'),
-                                ),
-                                title: Text(meal.steps[n],
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 135, 38, 109),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20), )
+                    ),
+                    child: SingleChildScrollView (
+                child: Column(
+                    children: [
+                      Text('ingredients',style: TextStyle(fontSize: 25,color: Colors.black),),
+                      build_bordered_widget(ListView.builder( //set wid and heaight of container because listview take all available height so it can cover other element
+                          itemCount: meal.ingredients.length,
+                          itemBuilder: (cxt,n){
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                color: Colors.yellow,
+                                child: Text(meal.ingredients[n],
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 18,color: Colors.black),
+                                )
                                 ),
-                              ),
-                            )
-                            ),
-                            Divider(color: Colors.black,)
-                        ],
-                      );
-                    }
-                    ),)
+                            );
+                          }
+                          ),
+                          ),
+
+                       Text('steps',style: TextStyle(fontSize: 25,color: Colors.black),),
+
+                        build_bordered_widget(ListView.builder( 
+                          itemCount: meal.steps.length,
+                          itemBuilder: (cxt,n){
+                            return Column(
+                              children: [
+                                Card(
+                                  color: Colors.yellow,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 4),
+                                    child:ListTile (
+                                      leading: CircleAvatar(
+                                        child: Text('#${n+1}'),
+                                      ),
+                                      title: Text(meal.steps[n],
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 18,color: Colors.black),
+                                      ),
+                                    ),
+                                  )
+                                  ),
+                                  Divider(color: Colors.black,)
+                              ],
+                            );
+                          }
+                          ),)
           
-              ],
-            ),
+                    ],
+                ),
           ),
+                  ), );
+              }
+            ),
+            Positioned(
+            left: 0,
+            right: 0,
+            height: kToolbarHeight,
+            child: Container(
+              color:Colors.transparent ,
+              child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(onPressed: () {
+                  Navigator.of(context).pop();
+                }, icon:Icon(Icons.arrow_back,color: Colors.white,)),
+                Text(meal.title,style:ThemeData.light().textTheme.bodyText1!.copyWith(color: Colors.white,fontWeight: FontWeight.w600) ,),
+                SizedBox()
+              ],
+            ),)),
+      ],)
+      
+      
+       
+     
       );
     
   }

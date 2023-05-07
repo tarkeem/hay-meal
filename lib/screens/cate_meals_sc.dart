@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:hay_meals/dummy_data.dart';
 import 'package:hay_meals/provider/mealProvider.dart';
 import 'package:hay_meals/widgets/cate_meals_item.dart';
@@ -41,6 +42,7 @@ class _cate_meals_scState extends State<cate_meals_sc> {
 
   @override
   Widget build(BuildContext context) {
+    var deviceSize=MediaQuery.of(context).size;
 List filtered_dummy=Provider.of<mealProvider>(context).filtered_meals;
     //i pass map of info before the navigation so the following line will get this map
     var routargu=ModalRoute.of(context)?.settings.arguments as Map; //put it in built fun so it can see context
@@ -58,8 +60,10 @@ List filtered_dummy=Provider.of<mealProvider>(context).filtered_meals;
       appBar: AppBar(
         title: Text(catetitle),
       ),
-      body: ListView.builder(
-      itemCount:CateMeals.length ,
+      body:Swiper(
+
+        
+  itemCount:CateMeals.length ,
       itemBuilder: (cxt,n){
         return meal_item(
           id: CateMeals[n].id,
@@ -70,8 +74,15 @@ List filtered_dummy=Provider.of<mealProvider>(context).filtered_meals;
           image_str:CateMeals[n].imageUrl,
            
           );
-      }
-      ),
+      },
+  itemWidth: deviceSize.width,
+  itemHeight:deviceSize.height*0.5,
+  layout: SwiperLayout.TINDER,
+)
+      
+
+
+      
     );
     
   }

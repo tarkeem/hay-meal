@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class themeProvider extends ChangeNotifier {
-  ThemeMode tm = ThemeMode.system;
+  ThemeMode tm = ThemeMode.light;
 
   String get _thememode_str {
     if (tm == ThemeMode.system) {
@@ -31,7 +31,7 @@ class themeProvider extends ChangeNotifier {
     pref.setString('theme', _thememode_str);
   }
 
-  Color primaryColor = Colors.white;
+  Color primaryColor = Colors.blue;
   void setPrimeColor(Color col) async {
     primaryColor = col;
     notifyListeners();
@@ -39,7 +39,7 @@ class themeProvider extends ChangeNotifier {
     pref.setInt('primcol', col.value);
   }
 
-  Color accentColor = Colors.black;
+  Color accentColor = Colors.grey;
   void setaccentColor(Color col) async {
     accentColor = col;
     notifyListeners();
