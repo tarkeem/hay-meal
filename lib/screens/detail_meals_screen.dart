@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hay_meals/dummy_data.dart';
 import 'package:hay_meals/provider/mealProvider.dart';
+import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 
 
@@ -24,14 +25,20 @@ class _detail_meal extends State<detail_meal> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child:Icon(Provider.of<mealProvider>(context,listen: true).is_in_fav(id)?Icons.delete :Icons.favorite),
-        onPressed: (){
-          Provider.of<mealProvider>(context,listen: false).add_remove_to_favourit(id); 
-        
-        
+        onPressed: () {
+          print('object');
+          Provider.of<mealProvider>(context,listen: false).add_remove_to_favourit(id);
         },
+        child:LikeButton(
+          circleSize: 25,
+          bubblesSize: 200,
+          onTap: (isLiked) async{
+            Provider.of<mealProvider>(context,listen: false).add_remove_to_favourit(id);
+            return !isLiked;
+          },
+        likeBuilder: (isLiked) =>  Provider.of<mealProvider>(context,listen: true).is_in_fav(id)?Icon(Icons.delete):Icon(Icons.favorite),
 
-      ),
+      )),
 
       body:Stack(
         fit: StackFit.expand,
