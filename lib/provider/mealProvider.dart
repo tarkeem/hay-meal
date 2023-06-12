@@ -17,8 +17,14 @@ class mealProvider extends ChangeNotifier {
     'isVegan': false,
     'isVegetarian': false,
   };
+   static const Map<String, bool> defult_filters = {
+    'isGlutenFree': false,
+    'isLactoseFree': false,
+    'isVegan': false,
+    'isVegetarian': false,
+  };
   List<Meal> filtered_meals = DUMMY_MEALS;
-  List<Category> available_cat = [];
+  List<Category> available_cat = DUMMY_CATEGORIES;
   setGluten(bool val) {
     print(val);
     filters['isGlutenFree'] = val;
@@ -44,7 +50,8 @@ class mealProvider extends ChangeNotifier {
   }
 
   //this function should execute after modifing filters map to make modification on filtered_meals that shows meals to user
-  void set_filters(Map<String, bool> filter) async {
+  Future set_filters([Map<String, bool> filter=defult_filters]) async {
+    available_cat=[];
     filters = filter;
     filtered_meals = DUMMY_MEALS.where((ele) {
       if (filters['isGlutenFree']! && ele.isGlutenFree) {

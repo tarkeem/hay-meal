@@ -9,7 +9,7 @@ Widget first(cxt) {
   bool isEng = Provider.of<languageProvider>(cxt).isEng;
   return Container(
     decoration:
-        BoxDecoration(image: DecorationImage(image: AssetImage('image.jpg'))),
+        BoxDecoration(image: DecorationImage(fit: BoxFit.fill,image: AssetImage('image.jpg'))),
     child: Column(
       children: [
         Text(
@@ -22,7 +22,7 @@ Widget first(cxt) {
             Switch(
                 value: isEng,
                 onChanged: (val) {
-                  Provider.of<languageProvider>(cxt).changeLang(val);
+                  Provider.of<languageProvider>(cxt,listen: false).changeLang(val);
                 })
           ],
         )

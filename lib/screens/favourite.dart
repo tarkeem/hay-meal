@@ -9,7 +9,6 @@ class fav extends StatelessWidget {
     Provider.of<mealProvider>(context, listen: false).fetch_fav_meal();
     List fav_list = Provider.of<mealProvider>(context).favourit_meal;
     return Scaffold(
-      appBar: AppBar(),
       body: fav_list.isEmpty
           ? Center(
               child: Text('it is empty'),

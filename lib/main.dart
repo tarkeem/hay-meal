@@ -13,6 +13,11 @@ import 'package:hay_meals/screens/onboard.dart';
 import 'package:hay_meals/screens/themeScreen.dart';
 import 'package:provider/provider.dart';
 
+
+//there is problem in filters concept
+
+
+
 /*
 sometimes you will face error like that "flutter failed to start daemon"
 to solve this problem go to flutter/pub.cash and delete pub.cash
@@ -66,7 +71,20 @@ class _MyApp extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       themeMode: Provider.of<themeProvider>(context).tm,
-      darkTheme: ThemeData(
+      darkTheme:ThemeData.dark().copyWith(
+        textTheme: TextTheme(
+          
+              bodyText1: TextStyle(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+              bodyText2: TextStyle(
+
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold)
+        ),
+        primaryColor: Provider.of<themeProvider>(context).primaryColor
+      ), /*ThemeData(
           canvasColor: Colors.black,
           accentColor: Colors.white,
           textTheme: ThemeData.dark().textTheme,//important to give a dark properties to it
@@ -80,7 +98,7 @@ class _MyApp extends State<MyApp> {
 
           /*there are two type of color
         1-Color:and it takes value as Colors.black
-        2-MaterialColor:it takes value as the following comment
+        2-MaterialColor:it takes value as the following code
         */
           primarySwatch: MaterialColor(
             primswatch,
@@ -96,7 +114,7 @@ class _MyApp extends State<MyApp> {
               800: Color(0xFFAD1457),
               900: Color(0xFF880E4F),
             },
-          )),
+          )),*/
       theme: ThemeData(
           backgroundColor: Colors.black.withOpacity(0.6),
           primarySwatch: Colors.pink,

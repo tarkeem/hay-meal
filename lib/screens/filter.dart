@@ -18,7 +18,7 @@ class _filterState extends State<filter> {
      Provider.of<mealProvider>(context,listen: false).fetch_filters();
   }*/
 
-  bool isGlutenFree = true;
+  bool isGlutenFree = false;
   bool isLactoseFree = false;
   bool isVegan = false;
   bool isVegetarian = false;
@@ -60,7 +60,7 @@ class _filterState extends State<filter> {
               color: Colors.yellow,
               child: Text(
                 'optimize your filters',
-                style: Theme.of(context).textTheme.bodyText1,
+                style: TextStyle(color: Colors.black,fontSize: 20),
               ),
             ),
             Expanded(
@@ -71,25 +71,25 @@ class _filterState extends State<filter> {
                         .setGluten(curr);
                     Provider.of<mealProvider>(context, listen: false)
                         .set_filters(curr_filter);
-                  }),
+                  },context),
                   newMethod('LactoseFree', isLactoseFree, (curr) {
                     Provider.of<mealProvider>(context, listen: false)
                         .setLactose(curr);
                     Provider.of<mealProvider>(context, listen: false)
                         .set_filters(curr_filter);
-                  }),
+                  },context),
                   newMethod('Vegan', isVegan, (curr) {
                     Provider.of<mealProvider>(context, listen: false)
                         .setVegan(curr);
                     Provider.of<mealProvider>(context, listen: false)
                         .set_filters(curr_filter);
-                  }),
+                  },context),
                   newMethod('Vegetarian', isVegetarian, (curr) {
                     Provider.of<mealProvider>(context, listen: false)
                         .setVegetarian(curr);
                     Provider.of<mealProvider>(context, listen: false)
                         .set_filters(curr_filter);
-                  }),
+                  },context),
                 ],
               ),
             )
@@ -97,7 +97,7 @@ class _filterState extends State<filter> {
         ));
   }
 
-  SwitchListTile newMethod(String ti, bool val, Function(bool curr) fun) {
-    return SwitchListTile(title: Text(ti), value: val, onChanged: fun);
+  SwitchListTile newMethod(String ti, bool val, Function(bool curr) fun,cxt) {
+    return SwitchListTile(title: Text(ti,style:Theme.of(cxt).textTheme.bodyText1 ,), value: val, onChanged: fun);
   }
 }

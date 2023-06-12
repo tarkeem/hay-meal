@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hay_meals/assets/language/language.dart';
+import 'package:hay_meals/models/language.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class languageProvider extends ChangeNotifier {
   bool isEng = true;
   void changeLang(bool val) async {
@@ -13,7 +12,7 @@ class languageProvider extends ChangeNotifier {
 
   void fetchLang() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    isEng = pref.getBool('isEng')!;
+    isEng = pref.getBool('isEng')??true;
     notifyListeners();
   }
 
